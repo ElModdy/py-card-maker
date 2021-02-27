@@ -5,7 +5,7 @@ from tinydb import TinyDB, where
 def get_pages():
     db = TinyDB('./db.json')
 
-    conn = sqlite3.connect('papyrus.db')
+    conn = sqlite3.connect('/data/data/com.steadfastinnovation.android.projectpapyrus/databases/papyrus.db')
 
     last = db.get(where('id') == 'last')['value']
 
