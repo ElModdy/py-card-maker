@@ -19,6 +19,6 @@ def get_pages():
 
     conn.close()
 
-    db.update({'value': last}, where('id') == 'last')
+#    db.update({'value': last}, where('id') == 'last')
 
     return rows

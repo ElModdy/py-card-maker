@@ -117,7 +117,7 @@ def handle_page(page_name):
     page_path = "{}{}.page".format(SQUID_PATH, page_name)
 
     page = papyrus_pb2.Page()
-    page.ParseFromString(open(page_path).read())
+    page.ParseFromString(open(page_path, 'rb').read())
 
 
     separator = 0
