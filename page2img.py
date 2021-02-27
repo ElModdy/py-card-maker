@@ -4,7 +4,8 @@ import cairocffi
 import math
 
 DPI = 200 # defined by cairocffi
-
+SQUID_PATH = "/data/data/com.steadfastinnovation.android.projectpapyrus/files/data/pages/"
+ANKI_PATH = "/sdcard/AnkiDroid/collection.media/"
 
 def cm_to_point(cm):
     return cm / 2.54 * DPI
@@ -85,7 +86,7 @@ def get_surface(items, height, width):
     return surface
 
 
-def getBigger(b1,b2):
+def get_bigger(b1, b2):
     if b1 is None:
         return b2
 
@@ -112,37 +113,49 @@ def crop_surface(surface, bounds):
     return new_surface
 
 
-if __name__ == '__main__':
-    page = papyrus_pb2.Page()
-    page.ParseFromString(open(sys.argv[1], 'rb').read())
+def handle_page(page_name):
+    page_path = "{}{}.page".format(SQUID_PATH, page_name)
 
+    page = papyrus_pb2.Page()
+    page.ParseFromString(open(page_path).read())
+
+
+    separator = 0
     for item in page.layer.item:
         if item.type == papyrus_pb2.Item.Type.Value('Stroke'):
             if item.stroke.color == 4294961979:
-                separator = item.stroke.bounds
+                separator = item.stroke.bounds.top
                 print(item.stroke.bounds)
                 break
 
-    bTop = None
-    bDown = None
+    btop = bdown = None
     for item in page.layer.item:
         if item.type == papyrus_pb2.Item.Type.Value('Stroke') and item.stroke.color != 4294961979:
-            if item.stroke.bounds.top < separator.top:
-                bTop = getBigger(bTop, item.stroke.bounds)
+            if item.stroke.bounds.top > separator:
+                bdown = get_bigger(bdown, item.stroke.bounds)
             else:
-                bDown = getBigger(bDown, item.stroke.bounds)
+                btop = get_bigger(btop, item.stroke.bounds)
 
     print("bTop")
-    print(bTop)
+    print(btop)
     print("bDown")
-    print(bDown)
+    print(bdown)
 
-    height = int(cm_to_point(bDown.bottom))
-    width = int(cm_to_point(max(bDown.right, bTop.right)))
+    top_right = 0 if btop is None else btop.right
+
+    height = int(cm_to_point(bdown.bottom))
+    width = int(cm_to_point(max(bdown.right, top_right)))
 
     surface = get_surface(page.layer.item, height, width)
 
-    sTop = crop_surface(surface, bTop)
-    sTop.write_to_png('top.png')
-    sDown = crop_surface(surface, bDown)
-    sDown.write_to_png('down.png')
+    bugged = True
+
+    if btop is not None:
+        bugged = False
+        stop = crop_surface(surface, btop)
+        stop.write_to_png('{}{}top.png'.format(ANKI_PATH, page_name))
+
+    sdown = crop_surface(surface, bdown)
+    sdown.write_to_png('{}{}down.png'.format(ANKI_PATH, page_name))
+
+    return bugged
