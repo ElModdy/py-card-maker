@@ -196,14 +196,12 @@ def handle_page(page_name):
             bounds = item.shape.ellipse.bounds
         elif item.type == papyrus_pb2.Item.Type.Value('Text'):
             bounds = item.text.bounds
-        else:
-            print(item)
 
-            if bounds is not None:
-                if bounds.top > separator:
-                    bdown = get_bigger(bdown, bounds)
-                else:
-                    btop = get_bigger(btop, bounds)
+        if bounds is not None:
+            if bounds.top > separator:
+                bdown = get_bigger(bdown, bounds)
+            else:
+                btop = get_bigger(btop, bounds)
 
     print("bTop")
     print(btop)
