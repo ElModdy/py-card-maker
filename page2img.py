@@ -184,7 +184,6 @@ def handle_page(page_name):
         if item.type == papyrus_pb2.Item.Type.Value('Stroke'):
             if item.stroke.color == 4294961979:
                 separator = item.stroke.bounds.top
-                print(item.stroke.bounds)
                 break
 
     btop = bdown = None
@@ -202,11 +201,6 @@ def handle_page(page_name):
                 bdown = get_bigger(bdown, bounds)
             else:
                 btop = get_bigger(btop, bounds)
-
-    print("bTop")
-    print(btop)
-    print("bDown")
-    print(bdown)
 
     top_right = 0 if btop is None else btop.right
 

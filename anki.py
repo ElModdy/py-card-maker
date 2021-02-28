@@ -10,5 +10,4 @@ def uploadCard(name, page_num, notebook, bugged):
     command = ("am broadcast -a com.elmoddy.cardmakerproxy.CREATE_CARD"
                " -e 'deck' '{}' -e 'front' '{}' -e 'back' '{}'").format(notebook, front, back)
 
-    print(command)
     os.system(command)
