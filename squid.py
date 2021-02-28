@@ -17,6 +17,7 @@ def get_pages():
     rows = conn.execute(pages_query).fetchall()
 
     def tag_new(row):
+        row = list(row)
         row[3] = True if row[3] > last else False
         return row
 
