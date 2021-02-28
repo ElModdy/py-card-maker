@@ -16,17 +16,15 @@ def get_pages():
 
     rows = conn.execute(pages_query).fetchall()
 
-    def tag_new(row):
-        row = list(row)
-        row[3] = True if row[3] > last else False
-        return row
-
-    pages = map(tag_new, rows)
-
+    for i in range(len(rows)):
+        rows[i] = list(rows[i])
+        rows[i][3] = True if rows[i][3] > last else False
+	rows[i][1] += 1
+    
     last = conn.execute(last_query).fetchone()[0]
 
     conn.close()
 
     db.update({'value': last}, where('id') == 'last')
 
-    return pages
+    return rows
