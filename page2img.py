@@ -141,7 +141,7 @@ def get_surface(items, height, width):
             print("Item of type {} not supported".format(papyrus_pb2.Item.Type.Name(item.type)))
 
     surface.flush()
-    surface.finish()
+    #surface.finish() altrimenti non posso settarla come source
     return surface
 
 
