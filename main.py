@@ -8,10 +8,12 @@ if __name__ == '__main__':
         name = page[0]
         page_num = page[1]
         notebook = page[2]
+        is_new = page[3]
 
         bugged = page2img.handle_page(name)
 
-        anki.uploadCard(name, page_num, notebook, bugged)
+        if is_new:
+            anki.uploadCard(name, page_num, notebook, bugged)
 
 
 
