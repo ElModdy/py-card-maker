@@ -1,4 +1,6 @@
-#Installation guide
+# Card Maker
+
+## Installation guide
 ```
 pkg update
 pkg upgrade
@@ -7,7 +9,7 @@ pip install cairocffi protobuf pypdf tinydb sqlite3
 LDFLAGS=" -lm" pip install pillow
 ```
 
-#Termux Widget
+## Termux Widget
 ```
 cd ~/.shortcuts
 mkdir tasks
