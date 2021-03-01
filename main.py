@@ -14,6 +14,9 @@ if __name__ == '__main__':
 
         if is_new:
             anki.uploadCard(name, page_num, notebook, bugged)
+            print("Nuova pagina ({}) in {}".format(page_num, notebook))
+        else:
+            print("Pagina {} modificata in {}".format(page_num, notebook))
 
 
 

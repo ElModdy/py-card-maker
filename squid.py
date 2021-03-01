@@ -19,7 +19,7 @@ def get_pages():
     for i in range(len(rows)):
         rows[i] = list(rows[i])
         rows[i][3] = True if rows[i][3] > last else False
-	rows[i][1] += 1
+        rows[i][1] += 1
     
     last = conn.execute(last_query).fetchone()[0]
 

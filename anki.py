@@ -8,6 +8,6 @@ def uploadCard(name, page_num, notebook, bugged):
             '<span style="font-size:0.5em">pagina {}</span>').format(name, page_num)
 
     command = ("am broadcast -a com.elmoddy.cardmakerproxy.CREATE_CARD"
-               " -e 'deck' '{}' -e 'front' '{}' -e 'back' '{}'").format(notebook, front, back)
+               " -e 'deck' '{}' -e 'front' '{}' -e 'back' '{}' > /dev/null").format(notebook, front, back)
 
     os.system(command)
